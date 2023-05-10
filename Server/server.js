@@ -13,7 +13,7 @@ const mongoose = require("mongoose");
 const { logEvents } = require("./middleware/logger");
 const PORT = process.env.PORT || 3000;
 
-console.log(process.env.PORT);
+console.log(process.env.NODE_ENV);
 connectDB();
 
 app.use(logger);
@@ -24,6 +24,9 @@ app.use(cookieParser());
 // middleware
 app.use("/", express.static(path.join(__dirname, "public")));
 app.use("/", require("./routes/root.js"));
+
+app.use('/users', require('./routes/userRoutes'))
+app.use('/notes', require('./routes/noteRoutes'))
 
 // handling server errors
 app.all("*", (req, res) => {
