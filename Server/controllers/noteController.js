@@ -46,7 +46,7 @@ const createNewNote = asyncHandler(async (req, res) => {
     // Create and store the new user 
     const note = await Note.create({ user, title, text })
 
-    if (note) { // Created 
+    if (note) {  
         return res.status(201).json({ message: 'New note created' })
     } else {
         return res.status(400).json({ message: 'Invalid note data received' })
