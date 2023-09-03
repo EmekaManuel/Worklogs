@@ -12,7 +12,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
       },
-      keepUnusedDataFor: 5,
+      // keepUnusedDataFor: 5,
       transformResponse: (responseData) => {
         const loadedUsers = responseData.map((user) => {
           user.id = user._id;
@@ -20,6 +20,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         });
         return usersAdapter.setAll(initialState, loadedUsers);
       },
+      // eslint-disable-next-line no-unused-vars
       providesTags: (result, error, arg) => {
         if (result?.ids) {
           return [

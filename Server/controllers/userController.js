@@ -5,7 +5,7 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 
 // @desc Get all Users
-// route GET /users
+// @route GET /users
 // @access Private
 const getAllUsers = asyncHandler(async (req, res) => {
   const users = await User.find().select("-password").lean();
@@ -26,7 +26,6 @@ const createNewUser = asyncHandler(async (req, res) => {
   if (!username || !password || !Array.isArray(roles) || !roles.length) {
     return res.status(400).json({ message: "All fields are required" });
   }
-
   // check for duplicate login details
   const duplicate = await User.findOne({ username }).lean().exec();
   if (duplicate) {
@@ -34,7 +33,6 @@ const createNewUser = asyncHandler(async (req, res) => {
       .status(409)
       .json({ message: "This Username has been Used Already" });
   }
-
   //hash passwords
   const hashedPasswords = await bcrypt.hash(password, 10); // 10 salt rounds
   const userObject = { username, password: hashedPasswords, roles };
@@ -53,7 +51,7 @@ const createNewUser = asyncHandler(async (req, res) => {
 // @access Private
 const updateUser = asyncHandler(async (req, res) => {
   const { id, username, roles, active, password } = req.body;
-  
+
   // confirm data exists
   if (
     !id ||
@@ -92,7 +90,7 @@ const updateUser = asyncHandler(async (req, res) => {
 });
 
 // @desc Delete a Users
-// route DELETE /users
+// @route DELETE /users
 // @access Private
 const deleteUser = asyncHandler(async (req, res) => {
   const { id } = req.body;
